@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroConnect - Ekspor Pertanian Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Plus Jakarta Sans agar terlihat modern tapi tidak terlalu artistik -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette Warna */
+            --bg-primary: #022C22; /* Hijau Tua Gelap */
+            --bg-secondary: #064E3B; /* Hijau Medium untuk Card */
+            /* PERUBAHAN 1: Background diganti jadi Warm Beige (Putih Hangat) */
+            --bg-light: #F9F5EB; /* Warna Cream Hangat */
+            
+            --text-white: #FFFFFF;
+            --text-muted: #D1FAE5;
+            --accent-yellow: #FBBF24; /* Kuning Emas */
+            --accent-green: #34D399; /* Hijau Neon lembut */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 50px; /* Bulat penuh agar lebih modern */
+            font-weight: 700;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            border: none;
+        }
+
+        /* Gradasi halus untuk tombol utama */
+        .btn-primary {
+            background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+            color: #064E3B;
+            box-shadow: 0 10px 20px -5px rgba(251, 191, 36, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(251, 191, 36, 0.6);
+        }
+
+        .btn-outline {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: white;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--bg-primary);
+        }
+        .btn-white:hover { background: #f0f0f0; transform: translateY(-2px); }
+
+        /* --- HEADER --- */
+        header {
+            background-color: rgba(2, 44, 34, 0.95); /* Sedikit transparan */
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.5px;
+        }
+        .logo i { color: var(--accent-yellow); }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover { color: white; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+
+        .nav-cta {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 24px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-cta:hover { background: rgba(255,255,255,0.2); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background-color: var(--bg-primary);
+            color: white;
+            padding: 80px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Glow Halus */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.2rem;
+            line-height: 1.2;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #ffffff, #d1fae5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        /* HERO RIGHT - FARMER IMAGE & STATS */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Container Gambar Petani */
+        .farmer-img-container {
+            width: 100%;
+            max-width: 500px;
+            height: 500px;
+            position: relative;
+            /* Bentuk Organic tapi tetap rapi */
+            clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
+        }
+
+        .farmer-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px; /* Fallback */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Floating Stats Cards (Glassmorphism) */
+        .stat-card {
+            position: absolute;
+            background: rgba(6, 78, 59, 0.85); /* Semi transparan */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            padding: 18px 24px;
+            border-radius: 16px;
+            color: white;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+            animation: float 6s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Posisi Statistik mengambang di atas gambar */
+        .stat-1 { top: 10%; right: -20px; animation-delay: 0s; }
+        .stat-2 { bottom: 15%; left: -30px; animation-delay: 2s; }
+        .stat-3 { top: 40%; right: -50px; background: rgba(2, 44, 34, 0.9); animation-delay: 1s; }
+
+        .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--accent-yellow); line-height: 1; }
+        .stat-label { font-size: 0.85rem; color: #d1fae5; line-height: 1.2; }
+        .stat-icon { font-size: 1.5rem; color: white; opacity: 0.5; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* --- PROBLEM vs SOLUTION SECTION --- */
+        .problem-solution {
+            padding: 100px 0;
+            background-color: white;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: var(--bg-primary);
+        }
+
+        .ps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+            text-align: left;
+        }
+
+        .ps-col {
+            padding: 40px;
+            border-radius: 24px; /* Sudut lebih bulat */
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .ps-problem {
+            background-color: #FEF2F2;
+            border-color: #FECACA;
+        }
+
+        .ps-solution {
+            background-color: #ECFDF5;
+            border-color: #A7F3D0;
+        }
+
+        .col-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .icon-red { background-color: #EF4444; }
+        .icon-green { background-color: #059669; }
+
+        .list-check li {
+            margin-bottom: 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1rem;
+            color: #374151;
+        }
+
+        .icon-minus { color: #EF4444; margin-top: 4px; }
+        .icon-plus { color: #059669; margin-top: 4px; }
+
+        /* --- FEATURES SECTION --- */
+        .features {
+            padding: 100px 0;
+            background-color: var(--bg-light); /* Menggunakan warna hangat */
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .features-header h2 { font-size: 2rem; color: var(--bg-primary); margin-bottom: 10px; }
+        .features-header p { color: #6B7280; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 32px;
+            border-radius: 20px;
+            transition: 0.3s;
+            position: relative;
+            border: 1px solid #F3F4F6;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        /* Highlight Card */
+        .feature-highlight {
+            background: linear-gradient(145deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background-color: var(--accent-yellow);
+            color: #064E3B;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(251, 191, 36, 0.3);
+        }
+
+        .f-icon {
+            font-size: 2rem;
+            margin-bottom: 24px;
+        }
+        .feature-highlight .f-icon { color: var(--accent-yellow); }
+        .feature-card:not(.feature-highlight) .f-icon { color: var(--bg-primary); }
+
+        .feature-card h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 700; }
+        .feature-card p { font-size: 0.95rem; opacity: 0.9; line-height: 1.6; }
+
+        /* --- STATS SECTION (60% Savings) --- */
+        .stats-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .stats-left {
+            flex: 1;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.3);
+        }
+        
+        /* Decoration pattern */
+        .stats-left::after {
+            content: '';
+            position: absolute;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            top: 0; right: 0;
+            opacity: 0.5;
+        }
+
+        .big-number {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .big-number span { color: var(--accent-yellow); font-size: 2.5rem; }
+
+        .mini-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mini-stat-item h4 { color: var(--accent-yellow); font-size: 1.3rem; font-weight: 700; }
+        .mini-stat-item p { font-size: 0.85rem; color: var(--text-muted); }
+
+        .stats-right {
+            flex: 1.2;
+        }
+
+        .benefits-list li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.05rem;
+            color: #374151;
+            padding: 10px;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+        
+        .benefits-list li:hover { background-color: #F3F4F6; }
+
+        .check-circle {
+            width: 28px;
+            height: 28px;
+            background: #ECFDF5;
+            color: #059669;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--bg-light); /* Menggunakan warna hangat */
+            text-align: center;
+        }
+
+        .testi-header h2 { font-size: 2.2rem; color: var(--bg-primary); margin-bottom: 10px; }
+        .stars { color: #FBBF24; margin-bottom: 40px; font-size: 1.5rem; }
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .testi-card {
+            background: white;
+            padding: 32px;
+            border-radius: 20px;
+            text-align: left;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        
+        .testi-card:hover { transform: translateY(-5px); }
+
+        .testi-text { font-style: italic; color: #4B5563; margin-bottom: 24px; font-size: 1rem; line-height: 1.6; }
+        .testi-user { display: flex; align-items: center; gap: 15px; }
+        .user-avatar { width: 50px; height: 50px; border-radius: 50%; background: #ddd; object-fit: cover; }
+        .user-info h5 { font-weight: 700; color: #111; font-size: 1rem; }
+        .user-info span { font-size: 0.85rem; color: #6B7280; }
+
+        .partners { border-top: 1px solid #E5E7EB; padding-top: 40px; }
+        .partners p { margin-bottom: 20px; color: #9CA3AF; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
+        .partners-logos { display: flex; justify-content: center; gap: 40px; opacity: 0.5; flex-wrap: wrap; font-weight: 700; color: #374151; }
+
+        /* --- HOW IT WORKS (FIXED WITH CONNECTOR LINE) --- */
+        .how-it-works { background: white; }
+        
+        .steps-area {
+            padding: 80px 0;
+        }
+        
+        .step-cards {
+            display: flex;
+            justify-content: space-between;
+            position: relative; /* Penting untuk garis */
+            margin-top: 60px;
+            margin-bottom: 80px;
+        }
+
+        /* GARIS PENGHUBUNG (STEM) */
+        .step-cards::after {
+            content: '';
+            position: absolute;
+            top: 35px; /* Posisi vertikal (setengah dari tinggi circle 70px) */
+            left: 60px; /* Mulai dari tengah item pertama (lebar circle/2 + margin) */
+            right: 60px; /* Sampai tengah item terakhir */
+            height: 4px; /* Ketebalan garis */
+            background: #10B981; /* Warna Hijau */
+            z-index: 0;
+            border-radius: 5px;
+        }
+
+        .step-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1; /* Di atas garis */
+        }
+
+        .step-num {
+            width: 70px; /* Diameter lingkaran */
+            height: 70px;
+            background: #FFFFFF; /* Putih untuk nutupin garis */
+            color: #064E3B;
+            border: 6px solid #FFFFFF; /* Border tebal putih agar garis terputus rapi */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); /* Bayangan halus */
+            transition: transform 0.3s;
+        }
+
+        .step-item:hover .step-num {
+            transform: scale(1.1);
+            border-color: #D1FAE5;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+        }
+
+        .step-item h4 { font-size: 1.1rem; font-weight: 700; color: var(--bg-primary); margin-bottom: 8px; }
+        .step-item p { font-size: 0.9rem; color: #6B7280; padding: 0 10px; line-height: 1.5; }
+
+        .cta-box-area {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: 70px 0;
+            text-align: center;
+            color: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px -10px rgba(2, 44, 34, 0.3);
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Hiasan background kotak CTA */
+        .cta-box-area::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -10%; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .cta-box-area h2 { font-size: 2.2rem; margin-bottom: 15px; position: relative; z-index: 2; }
+        .cta-box-area p { color: var(--text-muted); margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        
+        .cta-buttons { display: flex; justify-content: center; gap: 20px; position: relative; z-index: 2; }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #011a14; 
+            color: rgba(255,255,255,0.7);
+            padding: 80px 0 30px;
+            font-size: 0.9rem;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo { font-size: 1.5rem; color: white; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .footer-col h4 { color: white; margin-bottom: 20px; font-weight: 600; font-size: 1rem; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { color: rgba(255,255,255,0.6); transition: 0.2s; }
+        .footer-col ul li a:hover { color: var(--accent-yellow); }
+
+        .contact-item { display: flex; gap: 10px; margin-bottom: 12px; color: rgba(255,255,255,0.8); }
+        .social-icons a { margin-right: 15px; font-size: 1.1rem; color: white; transition: 0.3s; }
+        .social-icons a:hover { color: var(--accent-yellow); }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .hero-grid, .ps-grid, .stats-container, .footer-grid {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+            }
+            .hero { padding-top: 40px; text-align: center; }
+            .hero-text p { margin: 0 auto 30px; }
+            .hero-visual { margin-top: 50px; }
+            .step-cards { flex-direction: column; padding-left: 20px; text-align: left; align-items: flex-start; gap: 30px;}
+            
+            /* Hide horizontal line on mobile */
+            .step-cards::after { display: none; }
+            
+            /* Make it vertical line */
+            .step-item { 
+                display: flex; 
+                align-items: flex-start; 
+                gap: 20px; 
+                border-left: 4px solid #E5E7EB; 
+                padding-left: 20px; 
+                padding-bottom: 0;
+            }
+            .step-num { margin: 0; min-width: 60px; }
+            .step-item:last-child { border-left-color: var(--accent-green); } /* Highlight last step */
+            
+            .cta-buttons { flex-direction: column; padding: 0 20px; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fa-solid fa-leaf"></i> AgroConnect
+                </a>
+                <div class="nav-links">
+                    <a href="#solusi">Solusi</a>
+                    <a href="#fitur">Fitur</a>
+                    <a href="#testi">Testimoni</a>
+                    <a href="#bantuan">Bantuan</a>
+                </div>
+                <a href="#" class="nav-cta">Masuk</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <h1>Ekspor Makin Mudah, Impor Jadi Lancar. <br>Semua Ada di AgroConnect.</h1>
+                    <p>Platform digital yang menghubungkan petani lokal dengan pasar ekspor dan impor secara langsung tanpa perantara yang rumit.</p>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: start;">
+                        <a href="#" class="btn btn-primary">Bergabung Sekarang – Gratis!</a>
+                        <a href="#" class="btn btn-outline">Pelajari Dulu</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <!-- GAMBAR PETANI DENGAN FRAME UNIK -->
+                    <div class="farmer-img-container">
+                        <!-- Placeholder: Gambar Petani Profesional dengan Tablet -->
+                        <img src="https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?q=80&w=800&auto=format&fit=crop" alt="Petani Indonesia" class="farmer-img">
+                    </div>
+
+                    <!-- Floating Stats (Glass Effect) -->
+                    <div class="stat-card stat-1">
+                        <i class="fa-solid fa-earth-americas stat-icon"></i>
+                        <div>
+                            <div class="stat-num">50+</div>
+                            <div class="stat-label">Negara Tujuan</div>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-2">
+                        <i class="fa-solid fa-users stat-icon"></i>
+                        <div>
+                            <div class="stat-num">12.000+</div>
+                            <div class="stat-label">Petani Aktif</div>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-3">
+                        <i class="fa-solid fa-chart-simple stat-icon"></i>
+                        <div>
+                            <div class="stat-num">Rp 120M+</div>
+                            <div class="stat-label">Transaksi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM & SOLUTION -->
+    <section class="problem-solution">
+        <div class="container">
+            <h2 class="section-title">Distribusi Pertanian ke Pasar Internasional Masih Penuh Hambatan</h2>
+            
+            <div class="ps-grid">
+                <!-- Left: Problem -->
+                <div class="ps-col ps-problem">
+                    <div class="col-header">
+                        <div class="icon-box icon-red"><i class="fa-solid fa-xmark"></i></div>
+                        <span style="color: #991B1B;">Masalah yang Anda Hadapi</span>
+                    </div>
+                    <ul class="list-check">
+                        <li><i class="fa-solid fa-minus icon-minus"></i> Biaya logistik ekspor sangat mahal.</li>
+                        <li><i class="fa-solid fa-minus icon-minus"></i> Sulit menemukan buyer pembeli yang terpercaya.</li>
+                        <li><i class="fa-solid fa-minus icon-minus"></i> Proses administrasi dan perizinan rumit.</li>
+                        <li><i class="fa-solid fa-minus icon-minus"></i> Harga jual anjlok di pasar lokal.</li>
+                    </ul>
+                </div>
+
+                <!-- Right: Solution -->
+                <div class="ps-col ps-solution">
+                    <div class="col-header">
+                        <div class="icon-box icon-green"><i class="fa-solid fa-check"></i></div>
+                        <span style="color: var(--bg-primary);">Solusi AgroConnect</span>
+                    </div>
+                    <ul class="list-check">
+                        <li><i class="fa-solid fa-plus icon-plus"></i> Biaya logistik lebih hemat hingga 60%.</li>
+                        <li><i class="fa-solid fa-plus icon-plus"></i> Akses langsung ke ratusan buyer internasional.</li>
+                        <li><i class="fa-solid fa-plus icon-plus"></i> Bantuan legalitas dan dokumen ekspor.</li>
+                        <li><i class="fa-solid fa-plus icon-plus"></i> Harga kompetitif sesuai pasar global.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <a href="#" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">Bergabung Sekarang – Gratis!</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features" id="fitur">
+        <div class="container">
+            <div class="features-header">
+                <h2>Semua yang Anda Butuhkan dalam Satu Platform</h2>
+                <p>AgroConnect membantu memudahkan distribusi hasil pertanian Anda.</p>
+            </div>
+
+            <div class="feature-grid">
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <div class="f-icon"><i class="fa-solid fa-globe"></i></div>
+                    <h3>Akses Pasar Global</h3>
+                    <p>Terhubung langsung dengan pembeli dari berbagai negara tanpa perantara berlebihan.</p>
+                </div>
+
+                <!-- Card 2 (Highlighted) -->
+                <div class="feature-card feature-highlight">
+                    <span class="badge">Fitur Andalan</span>
+                    <div class="f-icon"><i class="fa-solid fa-boxes-packing"></i></div>
+                    <h3>Grup Shipment (Gabungan)</h3>
+                    <p>Pengiriman kontainer gabungan yang membuat biaya logistik jauh lebih murah dan efisien.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="f-icon"><i class="fa-solid fa-upload"></i></div>
+                    <h3>Manajemen Produk Mudah</h3>
+                    <p>Upload stok panen Anda, pantau kualitas, dan atur harga dalam satu dashboard sederhana.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="feature-card">
+                    <div class="f-icon"><i class="fa-solid fa-file-contract"></i></div>
+                    <h3>Legalitas & Dokumen</h3>
+                    <p>Kami bantu urus dokumen karantina, phytosanitary, dan sertifikasi ekspor produk.</p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="feature-card">
+                    <div class="f-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <h3>Pembayaran Aman</h3>
+                    <p>Sistem escrow payment untuk menjamin keamanan transaksi antara petani dan buyer.</p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="feature-card">
+                    <div class="f-icon"><i class="fa-solid fa-headset"></i></div>
+                    <h3>Dukungan 24/7</h3>
+                    <p>Tim ahli kami siap membantu Anda kapan saja untuk menyelesaikan kendala ekspor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SPLIT SECTION -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stats-left">
+                    <p style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-size: 0.9rem;">Total Penghematan</p>
+                    <div class="big-number"><span>60</span>%</div>
+                    <p style="color: var(--text-muted); margin-top: 10px;">Biaya Logistik Lebih Hemat</p>
+                    
+                    <div class="mini-stats">
+                        <div class="mini-stat-item">
+                            <h4>12K+</h4>
+                            <p>Petani</p>
+                        </div>
+                        <div class="mini-stat-item">
+                            <h4>300+</h4>
+                            <p>Buyer</p>
+                        </div>
+                        <div class="mini-stat-item">
+                            <h4>50+</h4>
+                            <p>Negara</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-right">
+                    <h2 style="font-size: 2rem; color: var(--bg-primary); margin-bottom: 30px;">Kenapa Petani Memilih Kami?</h2>
+                    <ul class="benefits-list">
+                        <li>
+                            <div class="check-circle"><i class="fa-solid fa-check"></i></div>
+                            <span>Pembeli internasional telah diverifikasi dan terpercaya.</span>
+                        </li>
+                        <li>
+                            <div class="check-circle"><i class="fa-solid fa-check"></i></div>
+                            <span>Harga jual stabil dan menguntungkan di atas pasar lokal.</span>
+                        </li>
+                        <li>
+                            <div class="check-circle"><i class="fa-solid fa-check"></i></div>
+                            <span>Proses quality control yang ketat menjaga reputasi produk.</span>
+                        </li>
+                        <li>
+                            <div class="check-circle"><i class="fa-solid fa-check"></i></div>
+                            <span>Komunitas petani yang solid untuk kolaborasi.</span>
+                        </li>
+                        <li>
+                            <div class="check-circle"><i class="fa-solid fa-check"></i></div>
+                            <span>Transparansi biaya penuh tanpa biaya tersembunyi.</span>
+                        </li>
+                        <li>
+                            <div class="check-circle"><i class="fa-solid fa-check"></i></div>
+                            <span>Cepat, mudah, dan dapat diakses dari HP.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testi">
+        <div class="container">
+            <div class="testi-header">
+                <h2>Dipercaya oleh 12.000+ Petani Indonesia</h2>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <span style="color: #374151; font-size: 1rem; margin-left: 10px;">4.9/5 Rata-rata Rating</span>
+                </div>
+            </div>
+
+            <div class="testi-grid">
+                <!-- Testi 1 -->
+                <div class="testi-card">
+                    <p class="testi-text">"Awalnya ragu bisa ekspor, tapi AgroConnect memudahkan semuanya. Panen cabai saya ludes ke China dengan harga bagus."</p>
+                    <div class="testi-user">
+                        <img src="https://picsum.photos/seed/farmer1/50/50" alt="Petani" class="user-avatar">
+                        <div class="user-info">
+                            <h5>Budi Santoso</h5>
+                            <span>Petani Cabai, Jawa Tengah</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testi 2 -->
+                <div class="testi-card">
+                    <p class="testi-text">"Fitur grup shipment-nya juara. Saya bisa kirim walau stok saya sedikit, biayanya jadi super hemat banget."</p>
+                    <div class="testi-user">
+                        <img src="https://picsum.photos/seed/farmer2/50/50" alt="Petani" class="user-avatar">
+                        <div class="user-info">
+                            <h5>Siti Aminah</h5>
+                            <span>Petani Padi, Sumatera</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testi 3 -->
+                <div class="testi-card">
+                    <p class="testi-text">"Dulu susah cari buyer, sekarang tinggal liat di aplikasi. Tim supportnya juga membantu urus dokumen karantina."</p>
+                    <div class="testi-user">
+                        <img src="https://picsum.photos/seed/farmer3/50/50" alt="Petani" class="user-avatar">
+                        <div class="user-info">
+                            <h5>Rahmat Hidayat</h5>
+                            <span>Petani Vanili, Sulawesi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="partners">
+                <p>DIPERCAYA & DIDUKUNG OLEH</p>
+                <div class="partners-logos">
+                    <span>KEMENTAN RI</span>
+                    <span>PT. POS INDONESIA</span>
+                    <span>BANK BNI</span>
+                    <span>EXPORT INDONESIA</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS & FINAL CTA -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="steps-area">
+                <div class="section-title" style="font-size: 1.8rem;">Mulai Ekspor dalam 4 Langkah Mudah</div>
+                <div class="step-cards">
+                    <div class="step-item">
+                        <div class="step-num">1</div>
+                        <div>
+                            <h4>Daftar Akun</h4>
+                            <p>Buat akun gratis dan lengkapi profil.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">2</div>
+                        <div>
+                            <h4>Upload Produk</h4>
+                            <p>Masukkan data, foto & volume.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">3</div>
+                        <div>
+                            <h4>Gabung Grup</h4>
+                            <p>Pilih jadwal & gabung kirim.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num">4</div>
+                        <div>
+                            <h4>Terima Bayar</h4>
+                            <p>Uang masuk ke rekening.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA BOX -->
+                <div class="cta-box-area">
+                    <h2>Siap Menembus Pasar Internasional?</h2>
+                    <p>Bergabunglah bersama 12.000+ petani Indonesia lainnya. Daftar gratis sekarang dan mulai jual hasil panen Anda ke seluruh dunia.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn btn-primary" style="padding: 18px 40px;">Mulai Ekspor Sekarang — Gratis!</a>
+                        <a href="#" class="btn btn-white">Jadwalkan Demo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="footer-logo"><i class="fa-solid fa-leaf"></i> AgroConnect</a>
+                    <p style="margin-bottom: 20px;">Platform digital agritech yang menghubungkan petani Indonesia dengan pasar ekspor global serta memudahkan impor kebutuhan pertanian.</p>
+                    <div class="contact-item"><i class="fa-solid fa-envelope"></i> AgroConnect@gmail.com</div>
+                    <div class="contact-item"><i class="fa-solid fa-phone"></i> +62 21 5555 8888</div>
+                    <div class="contact-item"><i class="fa-solid fa-location-dot"></i> Yogyakarta, Indonesia</div>
+                    <div class="social-icons" style="margin-top: 20px;">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>PLATFORM</h4>
+                    <ul>
+                        <li><a href="#">Cara Kerja</a></li>
+                        <li><a href="#">Fitur Unggulan</a></li>
+                        <li><a href="#">Harga Ekspor</a></li>
+                        <li><a href="#">Daftar Buyer</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>PERUSAHAAN</h4>
+                    <ul>
+                        <li><a href="#">Tentang Kami</a></li>
+                        <li><a href="#">Karir</a></li>
+                        <li><a href="#">Blog Pertanian</a></li>
+                        <li><a href="#">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>DUKUNGAN</h4>
+                    <ul>
+                        <li><a href="#">Pusat Bantuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 AgroConnect Indonesia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
